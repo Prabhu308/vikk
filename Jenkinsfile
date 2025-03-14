@@ -11,6 +11,12 @@ pipeline {
                 bat 'javac work.java'
             }
         }
+        stage('Run Tests') {
+            steps {
+                // Assuming you have a test class named WorkTest
+                bat 'java -cp . org.junit.runner.JUnitCore WorkTest'
+            }
+        }
         stage('Run Application') {
             steps {
                 bat 'java work'
@@ -18,8 +24,14 @@ pipeline {
         }
     }
     post {
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
         always {
-            echo 'Pipeline completed.'
+            echo 'Pipeline finished.'
         }
     }
 }
